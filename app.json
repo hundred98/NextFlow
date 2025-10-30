@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "NextFlow",
+    "slug": "n8n-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "description": "N8N Workflow Mobile Management Application - Monitor and manage your automated workflows anytime, anywhere.",
+    "privacy": "public",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.n8n.mobile.app",
+      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"],
+      "versionCode": 1,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "https",
+              "host": "*.n8n.io"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ff4a88b0-4413-46ab-8a8b-b4a09d7e53f4"
+      }
+    }
+  }
+}
