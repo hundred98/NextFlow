@@ -45,18 +45,18 @@ const WorkflowList: React.FC<WorkflowListProps> = ({
 
   const getStatusText = (status: string, isUnstartable: boolean) => {
     if (isUnstartable) {
-      return t('无法自动启动');
+      return t('无法激活');
     }
     
     switch (status) {
       case 'active':
-        return t('进行中');
+        return t('激活');
       case 'inactive':
-        return t('已暂停');
+        return t('未激活');
       case 'error':
         return t('错误');
       case 'running':
-        return t('执行中');
+        return t('激活');
       default:
         return status;
     }
@@ -248,7 +248,7 @@ const WorkflowList: React.FC<WorkflowListProps> = ({
         {isUnstartableWorkflow && (
           <View style={styles.disabledInfoContainer}>
             <Text style={[styles.disabledInfoText, isDarkMode && styles.darkText]}>
-              {t('此工作流无法自动启动')}
+              {t('此工作流无法激活')}
             </Text>
           </View>
         )}

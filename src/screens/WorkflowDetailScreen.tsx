@@ -153,7 +153,7 @@ const WorkflowDetailScreen: React.FC<Props> = ({ route, navigation }) => {
       case 'active': return t('激活');
       case 'inactive': return t('未激活');
       case 'error': return t('错误');
-      case 'running': return t('运行中');
+      case 'running': return t('激活');
       default: return status;
     }
   };
