@@ -737,11 +737,11 @@ const WorkflowListScreen: React.FC<WorkflowListScreenProps> = ({
             </View>
             <View style={[styles.statItem, styles.statActive, isDarkMode && styles.darkStatActive]}>
               <Text style={[styles.statValue, isDarkMode && styles.darkText]}>{stats.active}</Text>
-              <Text style={[styles.statLabel, isDarkMode && styles.darkText]}>{t('运行中')}</Text>
+              <Text style={[styles.statLabel, isDarkMode && styles.darkText]}>{t('激活')}</Text>
             </View>
             <View style={[styles.statItem, styles.statInactive, isDarkMode && styles.darkStatInactive]}>
               <Text style={[styles.statValue, isDarkMode && styles.darkText]}>{stats.inactive}</Text>
-              <Text style={[styles.statLabel, isDarkMode && styles.darkText]}>{t('已暂停')}</Text>
+              <Text style={[styles.statLabel, isDarkMode && styles.darkText]}>{t('未激活')}</Text>
             </View>
             <View style={[styles.statItem, styles.statError, isDarkMode && styles.darkStatError]}>
               <Text style={[styles.statValue, isDarkMode && styles.darkText]}>{stats.error}</Text>

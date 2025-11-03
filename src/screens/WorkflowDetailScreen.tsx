@@ -189,7 +189,7 @@ const WorkflowDetailScreen: React.FC<Props> = ({ route, navigation }) => {
     <View style={[styles.logItem, isDarkMode && styles.darkLogItem]}>
       <View style={styles.logHeader}>
         <Text style={[styles.logStatus, isDarkMode && styles.darkText]}>
-          {item.status === 'success' ? '✅' + t('成功') : item.status === 'error' ? '❌' + t('错误') : '⏳' + t('运行中')}
+          {item.status === 'success' ? '✅' + t('成功') : item.status === 'error' ? '❌' + t('错误') : '⏳' + t('激活')}
         </Text>
         <Text style={[styles.logTime, isDarkMode && styles.darkTextSecondary]}>
           {formatDate(item.timestamp)}

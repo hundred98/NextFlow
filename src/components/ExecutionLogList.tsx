@@ -33,7 +33,7 @@ const ExecutionLogList: React.FC<ExecutionLogListProps> = ({ logs, isDarkMode = 
       case 'error':
         return '错误';
       case 'running':
-        return '执行中';
+        return '激活';
       default:
         return status;
     }

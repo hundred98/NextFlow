@@ -233,7 +233,7 @@ const ErrorLogsListScreen: React.FC<ErrorLogsListScreenProps> = ({ navigation })
         <View style={styles.logHeader}>
           <Text style={[styles.logStatus, isDarkMode && styles.darkText]}>
             {item.status === 'success' ? '✅' : item.status === 'error' ? '❌' : '⏳'}
-            {item.status === 'success' ? t('成功') : item.status === 'error' ? t('错误') : t('运行中')}
+            {item.status === 'success' ? t('成功') : item.status === 'error' ? t('错误') : t('激活')}
           </Text>
           <Text style={[styles.logTime, isDarkMode && styles.darkTextSecondary]}>
             {formatDate(item.timestamp.toString())}
