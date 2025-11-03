@@ -219,7 +219,6 @@ const SettingsScreen = ({ navigation }: any) => {
 
   const startEditUrl = () => {
     setTempUrl(settings.n8nUrl);
-    setTempAuth({ ...settings.auth });
     setIsEditingUrl(true);
   };
 
@@ -229,14 +228,13 @@ const SettingsScreen = ({ navigation }: any) => {
       setSettings({
         ...settings,
         n8nUrl: newUrl,
-        auth: tempAuth,
       });
       
       // 保存设置后通知其他组件URL已更改
       if (Platform.OS === 'web') {
         try {
           // 保存到localStorage
-          const settingsToSave = { ...settings, n8nUrl: newUrl, auth: tempAuth };
+          const settingsToSave = { ...settings, n8nUrl: newUrl };
           localStorage.setItem(SETTINGS_KEY, JSON.stringify(settingsToSave));
           
           // 发送自定义事件通知URL更改
@@ -248,7 +246,7 @@ const SettingsScreen = ({ navigation }: any) => {
         // 在React Native环境中，使用AsyncStorage
         try {
           // 保存到AsyncStorage
-          const settingsToSave = { ...settings, n8nUrl: newUrl, auth: tempAuth };
+          const settingsToSave = { ...settings, n8nUrl: newUrl };
           AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settingsToSave));
           
           // 在React Native中触发一个自定义事件，通知其他组件URL已更改
@@ -266,8 +264,55 @@ const SettingsScreen = ({ navigation }: any) => {
     setIsEditingUrl(false);
   };
 
+  const startEditAuth = () => {
+    setTempAuth({ ...settings.auth });
+    setIsEditingAuth(true);
+  };
+
+  const confirmEditAuth = () => {
+    setSettings({
+      ...settings,
+      auth: tempAuth,
+    });
+    
+    // 保存设置后通知其他组件认证信息已更改
+    if (Platform.OS === 'web') {
+      try {
+        // 保存到localStorage
+        const settingsToSave = { ...settings, auth: tempAuth };
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settingsToSave));
+        
+        // 发送自定义事件通知认证信息更改
+        window.dispatchEvent(new CustomEvent('n8nAuthChanged', { detail: tempAuth }));
+      } catch (e) {
+        console.error('Failed to send auth change event:', e);
+      }
+    } else {
+      // 在React Native环境中，使用AsyncStorage
+      try {
+        // 保存到AsyncStorage
+        const settingsToSave = { ...settings, auth: tempAuth };
+        AsyncStorage.setItem(SETTINGS_KEY, JSON.stringify(settingsToSave));
+        
+        // 在React Native中触发一个自定义事件，通知其他组件认证信息已更改
+        const { DeviceEventEmitter } = require('react-native');
+        if (DeviceEventEmitter) {
+          DeviceEventEmitter.emit('n8nAuthChanged', tempAuth);
+        }
+      } catch (e) {
+        console.error('Failed to save auth to AsyncStorage:', e);
+      }
+    }
+    
+    setIsEditingAuth(false);
+  };
+
   const cancelEditUrl = () => {
     setIsEditingUrl(false);
+  };
+
+  const cancelEditAuth = () => {
+    setIsEditingAuth(false);
   };
 
   // 自动登出时间功能已移至三期开发
@@ -411,6 +456,9 @@ const SettingsScreen = ({ navigation }: any) => {
     });
   };
 
+  // 新增状态用于控制认证设置模态框
+  const [isEditingAuth, setIsEditingAuth] = useState(false);
+
   return (
     <ScrollView style={[styles.container, isDarkMode && styles.darkContainer]}>
       <View style={[styles.section, isDarkMode && styles.darkSection]}>
@@ -419,6 +467,18 @@ const SettingsScreen = ({ navigation }: any) => {
           <Text style={[styles.settingLabel, isDarkMode && styles.darkText]}>{t('n8n服务器URL')}</Text>
           <Text style={[styles.settingValue, isDarkMode && styles.darkText]} numberOfLines={1}>{settings.n8nUrl}</Text>
           <TouchableOpacity style={styles.editButton} onPress={startEditUrl}>
+            <Text style={styles.editButtonText}>{t('编辑')}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={[styles.settingItem, isDarkMode && styles.darkSettingItem]}>
+          <Text style={[styles.settingLabel, isDarkMode && styles.darkText]}>{t('认证设置')}</Text>
+          <Text style={[styles.settingValue, isDarkMode && styles.darkText]}>
+            {settings.auth.type === 'none' && t('无认证')}
+            {settings.auth.type === 'basic' && t('Basic认证')}
+            {settings.auth.type === 'header' && t('Header认证')}
+            {settings.auth.type === 'jwt' && t('JWT认证')}
+          </Text>
+          <TouchableOpacity style={styles.editButton} onPress={startEditAuth}>
             <Text style={styles.editButtonText}>{t('编辑')}</Text>
           </TouchableOpacity>
         </View>
@@ -546,8 +606,34 @@ const SettingsScreen = ({ navigation }: any) => {
               placeholder={t('输入n8n服务器URL')}
             />
             
-            {/* 认证设置 */}
-            <Text style={[styles.modalTitle, isDarkMode && styles.darkText, { marginTop: 15 }]}>{t('认证设置')}</Text>
+            <View style={styles.modalButtons}>
+              <TouchableOpacity 
+                style={[styles.modalButton, styles.cancelButton]} 
+                onPress={cancelEditUrl}
+              >
+                <Text style={styles.modalButtonText}>{t('取消')}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.modalButton, styles.applyButton]} 
+                onPress={confirmEditUrl}
+              >
+                <Text style={styles.modalButtonText}>{t('确定')}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+
+      {/* 认证设置模态框 */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isEditingAuth}
+        onRequestClose={() => {}} // 禁用硬件返回键关闭
+      >
+        <View style={styles.modalContainer}>
+          <View style={[styles.modalContent, isDarkMode && styles.darkModalContent]}>
+            <Text style={[styles.modalTitle, isDarkMode && styles.darkText]}>{t('认证设置')}</Text>
             
             {/* 认证类型选择 */}
             <View style={{ marginVertical: 10 }}>
@@ -614,13 +700,13 @@ const SettingsScreen = ({ navigation }: any) => {
             <View style={styles.modalButtons}>
               <TouchableOpacity 
                 style={[styles.modalButton, styles.cancelButton]} 
-                onPress={cancelEditUrl}
+                onPress={cancelEditAuth}
               >
                 <Text style={styles.modalButtonText}>{t('取消')}</Text>
               </TouchableOpacity>
               <TouchableOpacity 
                 style={[styles.modalButton, styles.applyButton]} 
-                onPress={confirmEditUrl}
+                onPress={confirmEditAuth}
               >
                 <Text style={styles.modalButtonText}>{t('确定')}</Text>
               </TouchableOpacity>

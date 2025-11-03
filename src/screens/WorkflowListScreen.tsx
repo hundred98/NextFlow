@@ -130,14 +130,30 @@ const WorkflowListScreen: React.FC<WorkflowListScreenProps> = ({
       });
     };
     
+    // 监听认证信息更改事件
+    const handleAuthChange = () => {
+      loadSettings().then((settings) => {
+        // 确保在设置加载完成后重新加载工作流数据
+        if (settings.url) {
+          setN8nUrl(settings.url);
+          setAuth(settings.auth);
+          loadWorkflows();
+        }
+      });
+    };
+    
     let deviceEventSubscription: any;
+    let authDeviceEventSubscription: any;
+    
     if (Platform.OS === 'web' && typeof window !== 'undefined' && window.addEventListener) {
       window.addEventListener('n8nUrlChanged', handleUrlChange);
+      window.addEventListener('n8nAuthChanged', handleAuthChange);
     } else if (Platform.OS !== 'web') {
       // 在React Native环境中监听DeviceEventEmitter事件
       try {
         const { DeviceEventEmitter } = require('react-native');
         deviceEventSubscription = DeviceEventEmitter.addListener('n8nUrlChanged', handleUrlChange);
+        authDeviceEventSubscription = DeviceEventEmitter.addListener('n8nAuthChanged', handleAuthChange);
       } catch (e) {
         console.warn('Unable to add DeviceEventEmitter listener:', e);
       }
@@ -146,8 +162,12 @@ const WorkflowListScreen: React.FC<WorkflowListScreenProps> = ({
     return () => {
       if (Platform.OS === 'web' && typeof window !== 'undefined' && window.removeEventListener) {
         window.removeEventListener('n8nUrlChanged', handleUrlChange);
+        window.removeEventListener('n8nAuthChanged', handleAuthChange);
       } else if (deviceEventSubscription) {
         deviceEventSubscription.remove();
+        if (authDeviceEventSubscription) {
+          authDeviceEventSubscription.remove();
+        }
       }
     };
   }, []);
@@ -243,7 +263,24 @@ const WorkflowListScreen: React.FC<WorkflowListScreenProps> = ({
       
       // 检查HTTP响应状态
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        try {
+          const errorData = await response.json();
+          if (errorData && errorData.message) {
+            errorMessage = errorData.message;
+          }
+        } catch (e) {
+          // 如果无法解析错误响应，则使用默认消息
+        }
+        
+        // 特别处理认证错误
+        if (response.status === 401) {
+          throw new Error('Authentication failed, please check authentication settings');
+        } else if (response.status === 403) {
+          throw new Error('Access forbidden, please check permissions');
+        }
+        
+        throw new Error(errorMessage);
       }
       
       const result = await response.json();
@@ -282,7 +319,7 @@ const WorkflowListScreen: React.FC<WorkflowListScreenProps> = ({
       });
       
       // 如果是认证错误，显示特定的错误消息
-      if (error.message && error.message.includes('401')) {
+      if (error.message && (error.message.includes('401') || error.message.includes('Authentication'))) {
         throw new Error('Authentication failed, please check authentication settings');
       }
       
@@ -486,19 +523,20 @@ const WorkflowListScreen: React.FC<WorkflowListScreenProps> = ({
         error: error
       });
       
+      // 清空数据以显示错误状态
+      setWorkflows([]);
+      calculateStats([]);
+      
       // 显示错误提示给用户
       Alert.alert(
         t('连接失败'),
         t('无法连接到N8N服务器，请检查：') + '\n\n' +
         t('1. 服务器地址是否正确') + '\n' +
         t('2. 网络连接是否正常') + '\n' +
-        t('3. 认证信息是否正确'),
+        t('3. 认证信息是否正确') + '\n\n' +
+        t('错误信息') + '：' + (error as Error).message,
         [{ text: t('确定') }]
       );
-      
-      // 清空数据以显示错误状态
-      setWorkflows([]);
-      calculateStats([]);
     } finally {
       setRefreshing(false);
       setIsLoading(false);
