@@ -6,7 +6,7 @@ A mobile application for monitoring and managing n8n workflows on the go.
 
 - View and monitor your n8n workflows
 - Color-coded workflow status indicators:
-  - Running status: Yellow indicator
+  - Running status: Green background with green indicator
   - Active status: Green background with green indicator
   - Paused status: Gray background with gray indicator
   - Cannot auto-start status: Gray background with gray indicator
@@ -18,6 +18,7 @@ A mobile application for monitoring and managing n8n workflows on the go.
 - Sensor data triggers
 - Shake gesture triggers
 - Lightweight approval and interaction capabilities
+- Authentication support (Basic, Header, JWT)
 
 ## Membership System
 
@@ -72,12 +73,16 @@ The NextFlow App offers a tiered membership system to provide different levels o
 - Workflow list viewing
 - Basic status monitoring
 - Key log viewing
+- Authentication support (Basic, Header, JWT)
 - Goal: Validate core interaction feasibility
 
 ### Phase 2 (Core Scenarios)
 - Hardware triggers (location/QR code)
 - Workflow approval functionality
 - In-app notifications
+- Notification settings
+- Local storage settings
+- Workflow display settings
 - Goal: Cover core business scenarios
 
 ### Phase 3 (Experience Optimization)
@@ -101,16 +106,3 @@ The NextFlow App offers a tiered membership system to provide different levels o
 3. **Identity Authentication**
    - Multi-factor authentication (MFA)
    - Fine-grained permission control
-
-4. **Device Security**
-   - Root/jailbreak detection
-   - App security hardening
-   - Auto screen lock protection
-
-5. **Operation Audit**
-   - Key operation logging
-   - Abnormal behavior interception
-
-6. **Emergency Response**
-   - Remote account control
-   - Regular security updates
