@@ -43,7 +43,7 @@ Create or add n8n API credentials:
 
 Ensure both Mobile App Integrations are properly configured.
 
-#### 2.3 ⚠️ 【Most Important Security Settings】 Configure Authentication ⚠️
+#### 2.3 ⚠️⚠️⚠️ 【Most Important Security Settings】 Configure Authentication ⚠️⚠️⚠️
 
 > **Security Warning**: This is the most important step to protect your workflow assets! Please ensure you set secure authentication credentials.
 
