@@ -7,7 +7,7 @@ A mobile application for monitoring and managing n8n workflows anytime, anywhere
 > - Please pay special attention to the 【Most Important Security Settings】 section
 > - This project is not intended for commercial use by default, and is provided for personal learning and use only
 > - Commercial use requirements: Please contact the author to obtain formal authorization
-> - Security consideration: If you have concerns about data security, please use with caution and avoid using this project in any commercially sensitive scenarios
+> - Security consideration: If you have concerns about data security, please do not use this project, and it is prohibited to use this project in any commercially sensitive scenarios
 > - Disclaimer: The author is not responsible for any issues arising during personal use
 
 ## Features
@@ -60,6 +60,7 @@ After completing the above configuration, activate this workflow:
 
 ### 3. Download Mobile App
 Download the NextFlow APP
+Please visit the GitHub Release page of this project to download the latest version of the NextFlow APP
 
 ### 4. Configure Mobile App
 
