@@ -4,7 +4,7 @@
 A mobile application for monitoring and managing n8n workflows anytime, anywhere, making your automation process management more convenient and efficient.
 
 > **Important Notice**:
-> - Please pay special attention to the 【Most Important Security Settings】 section
+> - Please pay special attention to the ⚠️⚠️⚠️【Most Important Security Settings】⚠️⚠️⚠️ section
 > - This project is not intended for commercial use by default, and is provided for personal learning and use only
 > - Commercial use requirements: Please contact the author to obtain formal authorization
 > - Security consideration: If you have concerns about data security, please do not use this project, and it is prohibited to use this project in any commercially sensitive scenarios
