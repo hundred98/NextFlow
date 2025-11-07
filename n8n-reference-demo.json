@@ -1,0 +1,102 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "path": "workflows/data",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        208
+      ],
+      "id": "a631362e-53ac-4d87-ad4b-39e2c9567040",
+      "name": "Webhook",
+      "webhookId": "ef0a77f5-86ee-4d92-b8de-7d63c85b186f"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "workflows/set",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        0
+      ],
+      "id": "4d386b46-afd9-4a1c-b321-8e491ab79a52",
+      "name": "Webhook1",
+      "webhookId": "23bf05cb-b4fb-49ab-9667-cb98fc97d8f0"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-mobile.mobileApp",
+      "typeVersion": 1,
+      "position": [
+        224,
+        208
+      ],
+      "id": "3f2d1def-ad5f-4756-a40b-9ba64ce4276b",
+      "name": "Mobile App Integration",
+      "credentials": {
+        "n8nApi": {
+          "id": "G1dylvZSgZmZ3zOV",
+          "name": "n8n account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "setWorkflow"
+      },
+      "type": "n8n-nodes-mobile.mobileApp",
+      "typeVersion": 1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "2f583970-2c97-4cec-9949-8fc07930eb22",
+      "name": "Mobile App Integration1",
+      "credentials": {
+        "n8nApi": {
+          "id": "G1dylvZSgZmZ3zOV",
+          "name": "n8n account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Mobile App Integration",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Mobile App Integration1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "69cf3063df3cdc73f31e3d57f67b1a5c1095c1a34e7ef43e8289326cd1f5f82a"
+  }
+}

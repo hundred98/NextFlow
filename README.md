@@ -1,108 +1,104 @@
-# NextFlow App
+# n8n Mobile App
+[中文文档](README-zh.md)
 
-A mobile application for monitoring and managing n8n workflows on the go.
+A mobile application for monitoring and managing n8n workflows anytime, anywhere, making your automation process management more convenient and efficient.
+
+> **Important Notice**:
+> - Please pay special attention to the 【Most Important Security Settings】 section
+> - This project is not intended for commercial use by default, and is provided for personal learning and use only
+> - Commercial use requirements: Please contact the author to obtain formal authorization
+> - Security consideration: If you have concerns about data security, please use with caution and avoid using this project in any commercially sensitive scenarios
+> - Disclaimer: The author is not responsible for any issues arising during personal use
 
 ## Features
 
 - View and monitor your n8n workflows
+- n8n server connection settings, including server address and authentication methods
+- Security authentication support (Basic, Header, JWT)
 - Color-coded workflow status indicators:
   - Running status: Green background with green indicator
   - Active status: Green background with green indicator
   - Paused status: Gray background with gray indicator
-  - Cannot auto-start status: Gray background with gray indicator
-- Check execution logs and results
+  - Cannot activate status: Gray background with gray indicator
+- View specific workflow execution logs and results
+- View specific workflow node details
 - Quickly enable/disable workflows
-- Manually trigger workflows with Manual Trigger, Webhook or Form Trigger nodes
-- Location-based triggers
-- Camera/gallery triggers
-- Sensor data triggers
-- Shake gesture triggers
-- Lightweight approval and interaction capabilities
-- Authentication support (Basic, Header, JWT)
+- App password lock feature to protect your application security
+- All settings and data are stored locally on your device and will not be uploaded to any server
+- Error log recording and viewing for troubleshooting
 
-## Membership System
+## Installation and Usage
 
-The NextFlow App offers a tiered membership system to provide different levels of functionality and services:
+### 1. Install n8n Community Node
+Please search for and install the `n8n-nodes-mobile` node in the Community nodes section under Settings
 
-### Free Tier (Basic)
-- Basic monitoring features: View workflow status and execution logs
-- Limited manual triggering capabilities
-- Basic notification functions
-- Community support
+### 2. Configure n8n
 
-### Professional Tier (Paid)
-- Unlimited workflow monitoring
-- Advanced triggers: Location, sensors, camera and other hardware triggers
-- Full manual triggering functionality
-- Priority notifications and reminders
-- Advanced security features (app lock, etc.)
-- Priority technical support
+#### 2.1 Import Workflow
+Create a new blank workflow and import: `n8n-reference-demo.json`
 
-### Team/Enterprise Tier (Paid)
-- Multi-user management
-- Team collaboration features
-- Advanced security controls
-- Dedicated customer support
-- Customization options
+#### 2.2 Configure API Credentials
+Create or add n8n API credentials:
+![API Credentials Configuration](n8n-api.png)
 
-## Technical Architecture
+Ensure both Mobile App Integrations are properly configured.
 
-### Frontend Development
-- **Technology Stack**: React Native cross-platform solution
-- **Core Interaction Design**:
-  - Card-based workflow list display
-  - Pull-to-refresh for status updates
-  - Long-press menu for quick operations
+#### 2.3 ⚠️ 【Most Important Security Settings】 Configure Authentication ⚠️
 
-### Backend Adaptation
-- **API Layer**:
-  - Dedicated mobile API endpoints
-  - Optimized data transmission efficiency
-- **Node Development**:
-  - Mobile input nodes (location/images/recording)
-  - Mobile notification nodes
-  - QR code trigger nodes
-- **Access Control**:
-  - Dedicated "mobile role"
-  - Restricted workflow access scope
+> **Security Warning**: This is the most important step to protect your workflow assets! Please ensure you set secure authentication credentials.
 
-## Implementation Roadmap
+Configure your Authentication method in both Webhooks:
+![Authentication Settings](Authentication.png)
 
-### Phase 1 (MVP+)
-- Manual trigger functionality (Webhook GET/Manual Trigger/Form Trigger/Chat Trigger/Execute Workflow Trigger/Schedule Trigger/Cron Trigger/Interval Trigger/Timer Trigger)
-- Workflow list viewing
-- Basic status monitoring
-- Key log viewing
-- Authentication support (Basic, Header, JWT)
-- Goal: Validate core interaction feasibility
+1. Select an authorization method (Basic Auth is recommended)
+2. Create a new credential
+3. **Set a complex username and password**, avoiding simple passwords
 
-### Phase 2 (Core Scenarios)
-- Hardware triggers (location/QR code)
-- Workflow approval functionality
-- In-app notifications
-- Notification settings
-- Local storage settings
-- Workflow display settings
-- Goal: Cover core business scenarios
+#### 2.4 Activate Workflow
+After completing the above configuration, activate this workflow:
+![Activate Workflow](Active.png)
 
-### Phase 3 (Experience Optimization)
-- Customizable workflow cards
-- Log filtering and export
-- Offline sync optimization
-- Multi-account switching
-- Advanced settings (biometric authentication, auto-logout time)
-- Goal: Enhance user experience
+### 3. Download Mobile App
+Download the NextFlow APP
 
-## Security Measures
+### 4. Configure Mobile App
 
-1. **Data Transmission Security**
-   - TLS 1.3 encryption
-   - API request signature verification
+1. Open NextFlow APP and click the "Settings" icon
+2. On the "Settings" page, click the edit button for "n8n Server URL" and enter your n8n server address
+3. On the "Settings" page, click the edit button for "Authentication Settings", select the authentication method you configured in n8n, then click "Username" and "Password" to enter the username and password you configured in n8n
+4. If the URL address, authentication method, username, and password are all correct, the n8n workflows will be displayed in the workflow list
 
-2. **Data Storage Security**
-   - System-level encryption for sensitive information
-   - Tiered protection for local data
+## Notes
 
-3. **Identity Authentication**
-   - Multi-factor authentication (MFA)
-   - Fine-grained permission control
+- Please ensure your n8n server is accessible from external networks (if you want to use it from non-local networks)
+- Update passwords regularly to ensure security
+- All settings and data are stored locally on your device and will not be uploaded to any server
+
+## Troubleshooting
+
+- **Connection failure**: Please check if the n8n server URL is correct, network connection is normal, and authentication information is correct
+- **Workflows not displayed**: Ensure you have correctly configured the authentication information and the workflows have been activated
+- **App crashes**: Try clearing app data or reinstalling the app
+
+## Author
+
+- **hundred98** - hundred98@163.com
+
+## Repository
+
+- GitHub: https://github.com/hundred98/NextFlow
+
+## Email Support
+
+- You can contact me by sending an email to hundred98@163.com
+- I will try my best to reply to your questions, but please allow some delay as I may have other work to handle
+
+## 📱 WeChat Support
+
+If you have any questions or suggestions, please follow my WeChat official account for technical support:
+
+<div align="center">
+  <img src="./assets/wechat-qr.jpg" alt="WeChat QR Code" width="200"/>
+  <br>
+  <em>Scan to follow the WeChat official account</em>
+</div>
